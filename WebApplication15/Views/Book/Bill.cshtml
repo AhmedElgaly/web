@@ -1,0 +1,67 @@
+﻿@model IEnumerable<WebApplication15.Models.Bill>
+
+@{
+    ViewBag.Title = "Bill";
+}
+
+<h2>Bill</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.cost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.from)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.to)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.t_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.personid)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.cost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.from)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.to)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.t_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.personid)
+        </td>
+       
+    </tr>
+}
+
+</table>

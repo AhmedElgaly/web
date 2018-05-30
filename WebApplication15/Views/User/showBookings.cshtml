@@ -1,0 +1,57 @@
+﻿@model IEnumerable<WebApplication15.Models.booking>
+
+@{
+    ViewBag.Title = "showBookings";
+}
+
+<h2>showBookings</h2>
+
+<table class="table">
+    <tr>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.NumOFChair)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.cost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.t_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.busid)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.NumOFChair)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.t_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.busid)
+        </td>
+        <td>
+            @Html.ActionLink("Cancel", "Cancel", new { id = item.Id }, new { @class ="btn btn-danger"}) 
+            @Html.ActionLink("ShowBill", "ShowBill", new { id = item.Id }, new { @class = "btn btn-primary" })
+
+        </td>
+    </tr>
+}
+
+</table>

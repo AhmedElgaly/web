@@ -1,0 +1,81 @@
+﻿@model WebApplication15.ModelView.BusTrip
+@{
+    ViewBag.Title = "New Bus";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>New Bus</h2>
+
+<div class="alert alert-success" style="display:none" id="success">
+    <strong>Inserted Successfully.....</strong>
+</div>
+<div class="alert alert-danger" style="display:none" id="fail">
+    <strong>Inserted Failed.....</strong>
+</div>
+<form id="myform">
+    <div class="from-group">
+        @Html.LabelFor(x => x.bus.Driver_name)
+        @Html.TextBoxFor(m => m.bus.Driver_name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.bus.Driver_name)
+    </div>
+    <div class="from-group">
+        @Html.LabelFor(x => x.bus.Capacity)
+        @Html.TextBoxFor(m => m.bus.Capacity, new { @class = "form-control", id = "capacity" })
+        @Html.ValidationMessageFor(m => m.bus.Capacity)
+    </div>
+
+    <div class="from-group">
+        @Html.LabelFor(x => x.bus.Num_Chairs)
+        @Html.TextBoxFor(m => m.bus.Num_Chairs, new { @class = "form-control",id="tickets" })
+        @Html.ValidationMessageFor(m => m.bus.Num_Chairs)
+    </div>
+
+    <div class="from-group">
+        @Html.LabelFor(x => x.bus.color)
+        @Html.TextBoxFor(m => m.bus.color, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.bus.color)
+    </div>
+
+    <div class="from-group">
+        @Html.LabelFor(x => x.bus.tripid)
+        @Html.DropDownListFor(x => x.bus.tripid, new SelectList(Model.trip, "id", "id"), "Select city", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.bus.tripid)
+    </div>
+
+    <button type="button" class="btn btn-primary" id="save">Add</button>
+</form>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            x = $("#tickects").val();
+            y = $("#capacity").val();
+            $("#save").click(function () {
+                
+                    if ($("#myform").valid()) {
+                        mydata = $("#myform").serialize();
+                        $.ajax({
+                            type: "POST",
+                            url: "/Bus/Add_New",
+                            data: mydata,
+                            success: function (response) {
+                                if (response.result == 1) {
+                                    $("#success").show(1000);
+                                    $("#success").hide(2000);
+                                }
+                                else {
+                                    $("#fail").show(1000);
+                                    $("#fail").hide(2000);
+                                }
+                            }
+                        })
+                    }
+                
+            })
+        })
+
+    </script>
+}

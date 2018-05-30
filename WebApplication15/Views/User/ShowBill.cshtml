@@ -1,0 +1,24 @@
+﻿@model WebApplication15.Models.Bill
+@{
+    ViewBag.Title = "ShowBill";
+}
+
+<h2>ShowBill</h2>
+<p>
+    You Have Booked At : @Model.time
+</p>
+<p>
+    Your Cost : @Model.cost
+</p>
+<p>
+    From : @Model.from
+</p>
+<p>
+    To : @Model.to
+</p>
+
+<p>
+    You Have Booked At : @Model.type
+</p>
+@Html.ActionLink("Generate Bill", "report", new { id = Model.id }, new { @class = "btn btn-info" })
+

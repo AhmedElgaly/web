@@ -1,0 +1,116 @@
+﻿@model WebApplication15.Models.User
+
+@{
+    ViewBag.Title = "Register";
+    
+}
+
+<h2>Register</h2>
+
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="SignUp">
+        <form id="myform">
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>User</h4>
+                <hr />
+                @Html.ValidationSummary(true)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.UserName)
+                        @Html.ValidationMessageFor(model => model.UserName)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Email)
+                        @Html.ValidationMessageFor(model => model.Email)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Ssn, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Ssn)
+                        @Html.ValidationMessageFor(model => model.Ssn)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Age, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Age)
+                        @Html.ValidationMessageFor(model => model.Age)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Address)
+                        @Html.ValidationMessageFor(model => model.Address)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Mobile, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Mobile)
+                        @Html.ValidationMessageFor(model => model.Mobile)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Password, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(model => model.Password)
+                        @Html.ValidationMessageFor(model => model.Password)
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="button" value="Sign_Up" class="btn btn-primary" id="save" />
+                    </div>
+                </div>
+            </div>
+
+        </form>
+</div>
+    </div>
+
+        @section Scripts{
+            @Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/jqueryval")
+            @Scripts.Render("~/bundles/bootstrap")
+
+            <script>
+                $(document).ready(function () {
+                    $("#save").click(function () {
+                        if ($("#myform").valid()) {
+                            mydata = $("#myform").serialize();
+                            $.ajax({
+                                type: "POST",
+                                url: "/User/Register",
+                                data: mydata,
+                                success: function (response) {
+                                    if (response.result == 1) {
+                                        alert("Done");
+                                    }
+                                    else {
+                                        alert("Not Done");
+                                    }
+                                }
+                            })
+                        }
+                    })
+                })
+
+            </script>
+        }

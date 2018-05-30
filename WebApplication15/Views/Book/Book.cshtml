@@ -1,0 +1,62 @@
+﻿@model WebApplication15.ModelView.bookbus
+@{
+    ViewBag.Title = "booking";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>booking</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(c => c.booking.personid, new { id = Session["ID"], Value = Session["ID"] })
+
+
+
+   
+
+
+    <div class="from-group">
+        @Html.CheckBoxFor(x => x.booking.payment)
+        @Html.LabelFor(x => x.booking.payment)
+    </div>
+    <div class="from-group">
+        @Html.LabelFor(x => x.booking.busid)
+        @Html.DropDownListFor(x => x.booking.busid, new SelectList(Model.bus, "id", "id"), "Select bus", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.booking.busid)
+    </div>
+   
+     <div class="from-group">
+        @Html.LabelFor(x => x.booking.NumOFChair)
+        @Html.TextBoxFor(m => m.booking.NumOFChair, new { @class = "form-control",type="number" })
+        @Html.ValidationMessageFor(m => m.booking.NumOFChair)
+        @Html.Raw(TempData["alertMessage"])
+    </div>
+
+    <button type="submit" class="btn btn-primary">confirm</button>
+}
+@section Scripts{
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            $("#busid").change(function () {
+                id = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: "/Book/GetLineBuses/" + id,
+
+                    success: function (response) {
+                        $("#test").empty();
+                        $("#test").append("<option > Select Bus </option>");
+                        response.forEach(function (entry) {
+                            $("#busid").append("<option value=" + entry.ID + ">" + entry.ID + "</option>");
+                        });
+                    }
+
+                })
+            })
+        })
+           
+          </script>
+        }

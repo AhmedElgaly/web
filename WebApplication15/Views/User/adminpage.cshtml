@@ -1,0 +1,14 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "adminpage";
+}
+
+<h2>adminpage</h2>
+
+@if (ViewBag.username != null)
+{
+    <h2>Hello @ViewBag.username</h2>
+}
+
+<h1>Welcome To Home Page</h1>

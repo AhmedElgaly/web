@@ -1,0 +1,88 @@
+﻿@model WebApplication15.Models.trip
+@{
+    ViewBag.Title = "New Trip";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>New Trip</h2>
+<div class="alert alert-success" style="display:none" id="success">
+    <strong>Inserted Successfully.....</strong>
+</div>
+<div class="alert alert-danger" style="display:none" id="fail">
+    <strong>Inserted Failed.....</strong>
+</div>
+
+<form id="New">
+    <div class="from-group">
+        @Html.LabelFor(x => x.distance)
+        @Html.TextBoxFor(m => m.distance, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.distance)
+    </div>
+
+    <div class="from-group">
+        @Html.LabelFor(x => x.date)
+        @Html.TextBoxFor(m => m.date, new { @class = "form-control" ,type="date"})
+        @Html.ValidationMessageFor(m => m.date)
+    </div>
+
+    <div class="from-group">
+        @Html.LabelFor(x => x.duration)
+        @Html.TextBoxFor(m => m.duration, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.duration)
+    </div>
+
+    <div class="from-group">
+        @Html.LabelFor(x => x.from)
+        @Html.DropDownList("from", (SelectList)ViewBag.from, "Select city", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.from)
+    </div>
+
+    <div class="from-group">
+        @Html.LabelFor(x => x.to)
+        @Html.DropDownList("to", (SelectList)ViewBag.to, "Select City", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.to)
+    </div>
+
+    <div class="from-group">
+        @Html.LabelFor(x => x.price)
+        @Html.TextBoxFor(m => m.price, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.price)
+    </div>
+
+    <button type="button" class="btn btn-primary" id="save">Save</button>
+</form>
+@section Scripts{
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            $("#save").click(function () {
+                if ($("#New").valid()) {
+                    mydata = $("#New").serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: "/Trip/newtrip",
+                        data: mydata,
+                        success: function (response) {
+                            if (response.result == 1) {
+                                $("#success").show(1000);
+                                $("#success").hide(2000);
+                            }
+                            else {
+                                $("#fail").show(1000);
+                                $("#fail").hide(2000);
+                            }
+                        }
+                    })
+                }
+            })
+            var $drop = $('.form-control').change(function () {
+                $drop.children().show()
+                    .end().not(this)
+                    .find('[value="' + $(this).val() + '"]').hide();
+            });
+        })
+
+    </script>
+}

@@ -1,0 +1,92 @@
+﻿@model IEnumerable<WebApplication15.Models.trip>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("newtrip", "newtrip")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.distance)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.from)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.to)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.duration)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr id="record_@item.id">
+            <td>
+                @Html.DisplayFor(modelItem => item.distance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.from)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.to)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.duration)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }, new {@class="btn btn-primary" }) |
+           
+                <button type="button" class="btn btn-danger" id="save" onclick="Delete(@item.id)">Delete</button>
+            </td>
+        </tr>
+    }
+
+</table>
+@section Scripts{
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        function Delete(id) {
+            if (confirm("Are You Sure???")) {
+                $.ajax({
+                    type: "GET",
+                    url: "/Trip/Delete/" + id,
+
+                    success: function (response) {
+                        if (response.result == 1) {
+
+                            $("#record_" + id).remove();
+                        }
+                        else {
+                            alert("Not Done");
+
+                        }
+                    }
+                })
+            }
+        }
+
+    </script>
+}

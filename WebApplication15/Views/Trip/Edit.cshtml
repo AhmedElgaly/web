@@ -1,0 +1,48 @@
+﻿@model WebApplication15.Models.trip
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Edit Trip</h2>
+
+@using (Html.BeginForm()) { 
+    @Html.HiddenFor(c => c.id)
+    <div class="from-group">
+        @Html.LabelFor(x => x.distance)
+        @Html.TextBoxFor(m => m.distance, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.distance)
+    </div>
+
+    <div class="from-group">
+        @Html.LabelFor(x => x.date)
+        @Html.TextBoxFor(m => m.date, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.date)
+    </div>
+
+    <div class="from-group">
+        @Html.LabelFor(x => x.duration)
+        @Html.TextBoxFor(m => m.duration, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.duration)
+    </div>
+
+    <div class="from-group">
+        @Html.LabelFor(x => x.from)
+        @Html.DropDownList("from", (SelectList)ViewBag.from, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.from)
+    </div>
+
+    <div class="from-group">
+        @Html.LabelFor(x => x.to)
+        @Html.DropDownList("to", (SelectList)ViewBag.to, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.to)
+    </div>
+
+    <div class="from-group">
+        @Html.LabelFor(x => x.price)
+        @Html.TextBoxFor(m => m.price, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.price)
+    </div>
+
+    <button type="submit" class="btn btn-danger">Edit</button>
+}

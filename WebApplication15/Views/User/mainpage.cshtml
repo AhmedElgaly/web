@@ -1,0 +1,17 @@
+﻿@{
+   
+    ViewBag.Title = "mainpage";
+
+}
+
+<h2>mainpage</h2>
+@if (ViewBag.username != null)
+{
+    <h2>Hello @ViewBag.username</h2>
+}
+
+<h1>Welcome To Home Page</h1>
+<p>
+    @Html.ActionLink("logoff", "logoff")
+
+</p>

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<WebApplication15.Models.trip>
+
+@{
+    ViewBag.Title = "show_Booked_trip";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>show_Booked_trip</h2>
+
+S
+<table class="table">
+    <tr>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.from)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.to)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.num_buses)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+      
+        <td>
+            @Html.DisplayFor(modelItem => item.date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.from)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.to)
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.num_buses)
+        </td>
+        <td>
+            @Html.ActionLink("Cancel Trip", "Cancel", new { id = item.id }, new { @class = "btn btn-danger" }) 
+          
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,86 @@
+﻿@model IEnumerable<WebApplication15.Models.Bus>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Add_New", "Add_New")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Driver_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.color)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Capacity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Num_Chairs)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tripid)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+{
+    <tr id="record_@item.ID">
+        <td>
+            @Html.DisplayFor(modelItem => item.Driver_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.color)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Capacity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Num_Chairs)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tripid)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class="btn btn-primary"}) 
+            
+            <button type="button" class="btn btn-danger" id="save" onclick="Delete(@item.ID)">Delete</button>
+        </td>
+    </tr>
+}
+
+</table>
+@section Scripts{
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        function Delete(id) {
+            if (confirm("Are You Sure???")) {
+                $.ajax({
+                    type: "GET",
+                    url: "/Bus/Delete/" + id,
+
+                    success: function (response) {
+                        if (response.result == 1) {
+
+                            $("#record_" + id).remove();
+                        }
+                        else {
+                            alert("Not Done");
+
+                        }
+                    }
+                })
+            }
+        }
+
+    </script>
+}

@@ -1,0 +1,39 @@
+﻿@model List<WebApplication15.Models.booking>
+@using System.Configuration
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-reboot.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <div>
+        <form action="@ConfigurationManager.AppSettings["urlSubmitPayment"]">
+            <input type="hidden" name="cmd" value="_cart" />
+            <input type="hidden" name="upload" value="1" />
+            <input type="hidden" name="return" value="@ConfigurationManager.AppSettings["urlReturn"]" />
+            <input type="hidden" name="business" value="@ConfigurationManager.AppSettings["accountBusiness"]" />
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <input type="hidden" name="@Url.Content("item_name_"+(i+1))" value="@Session["Username"]" />
+                <input type="hidden" name="@Url.Content("item_number_"+(i+1))" value="@Model[i].busid" />
+                <input type="hidden" name="@Url.Content("amount_"+(i+1))" value="@Model[i].cost" />
+                <input type="hidden" name="@Url.Content("quantity_"+(i+1))" value="1" />
+            }
+            <br />
+            <div class="col-md-12">
+                <input type="submit" value="Checkout Now" class="btn btn-primary col-md-12" />
+            </div>
+        </form>
+    </div>
+</body>
+</html>

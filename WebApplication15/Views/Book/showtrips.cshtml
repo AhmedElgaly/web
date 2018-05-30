@@ -1,0 +1,98 @@
+﻿@model WebApplication15.Models.booking
+
+@{
+    ViewBag.Title = "showtrips";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>showtrips</h2>
+
+
+<form id="myForm">
+  
+   
+
+        <div class="from-group">
+            @Html.LabelFor(x => x.t_id)
+            @Html.DropDownListFor(x => x.t_id, new SelectList(Model.trips, "Id", "Id"), "Select trip", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.t_id)
+        </div>
+
+        <div class="from-group">
+            @Html.LabelFor(x => x.busid)
+            @Html.DropDownListFor(x => x.busid, new List<SelectListItem>(), "Select Bus", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.busid)
+        </div>
+        <div class="from-group">
+            @Html.LabelFor(x => x.personid)
+            @Html.DropDownListFor(x => x.personid, new List<SelectListItem>(), "Select User", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.personid)
+        </div>
+
+
+        <button type="button" id="block" class="btn btn-primary">Block</button>
+       
+</form>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            $("#t_id").change(function () {
+                id = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: "/Book/GetLineBuses/" + id,
+
+                    success: function (response) {
+                        $("#busid").empty();
+                        $("#busid").append("<option > Select Bus </option>");
+                        response.forEach(function (entry) {
+                            $("#busid").append("<option value=" + entry.ID + ">" + entry.ID + "</option>");
+                        });
+                    }
+
+                })
+            })
+            $("#busid").change(function () {
+                id = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: "/Book/GetUserBuses/" + id,
+
+                    success: function (response) {
+                        $("#personid").empty();
+                        $("#personid").append("<option > Select user </option>");
+                        response.forEach(function (entry) {
+                            $("#personid").append("<option value=" + entry.personid + ">" + entry.personid + "</option>");
+                        });
+                    }
+
+                })
+            })
+          
+            $("#block").click(function () {
+                if ($("#myForm").valid()) {
+                    mydata = $("#myForm").serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: "/Book/showtrips",
+                        data: mydata,
+                        success: function (response) {
+                            if (response.result == 1) {
+                                alert("Blocked");
+                            }
+                            else {
+                                alert("Not Blocked");
+                            }
+                        }
+                    })
+                }
+            })
+
+        })
+
+    </script>
+}
